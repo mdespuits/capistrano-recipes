@@ -21,5 +21,6 @@ namespace :nginx do
     task command, roles: :web do
       run "#{sudo} service nginx #{command}"
     end
+    after "deploy:#{command}", "nginx:#{command}"
   end
 end
