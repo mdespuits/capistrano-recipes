@@ -1,0 +1,18 @@
+env = ENV["RAILS_ENV"] || "production"
+
+working_directory "<%= current_path %>"
+
+# Unicorn pid
+pid "<%= unicorn_pid %>"
+
+stderr_path "<%= unicorn_err_log %>"
+stdout_path "<%= unicorn_out_log %>"
+
+# Unicorn socket listener
+listen "<%= shared_path %>/config/unicorn.<%= application %>.sock"
+
+# Unicorn worker processes
+worker_processes <%= unicorn_workers %>
+
+# Timeout at 30 seconds
+timeout <%= unicorn_timeout %>
