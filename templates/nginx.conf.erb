@@ -3,7 +3,7 @@ upstream <%= application %> {
 }
 
 server {
-  listen 80 default deferred;
+  listen <%= nginx_port %> default deferred;
   # server_name example.com;
   root <%= current_path %>/public;
   error_log <%= shared_path %>/log/nginx.log;

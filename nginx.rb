@@ -1,3 +1,5 @@
+set_default(:nginx_port, 80)
+
 namespace :nginx do
   desc "Install latest stable release of nginx"
   task :install, roles: :web do
