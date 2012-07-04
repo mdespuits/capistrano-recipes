@@ -6,23 +6,32 @@ server {
   listen <%= nginx_port %> default deferred;
   server_name <%= domain_name %>;
   root <%= current_path %>/public;
+
+  access_log off;
   error_log <%= shared_path %>/log/nginx.log;
 
   location ^~ /assets/ {
+    root <%= current_path %>/public;
     gzip_static on;
     expires max;
     add_header Cache-Control public;
   }
 
+  <% if nginx_chrome_frame %>
+  add_header "X-UA-Compatible" "IE=Edge,chrome=1";
+  <% end %>
+
   try_files $uri/index.html $uri @<%= application %>;
   location @<%= application %> {
+    proxy_pass http://<%= application %>;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
-    proxy_pass http://<%= application %>;
   }
 
+  <% if nginx_error_pages %>
   error_page 500 502 503 504 /500.html;
+  <% end %>
   client_max_body_size 4G;
   keepalive_timeout 10;
 }

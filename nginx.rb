@@ -1,4 +1,6 @@
 set_default(:nginx_port, 80)
+set_default(:nginx_error_pages, true)
+set_default(:nginx_chrome_frame, true)
 
 namespace :nginx do
   desc "Install latest stable release of nginx"
