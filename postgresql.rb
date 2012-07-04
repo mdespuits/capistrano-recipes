@@ -13,6 +13,12 @@ namespace :postgresql do
   after "deploy:install", "postgresql:install"
 
   desc "Create a database for this application."
+  task :drop_database, roles: :db, only: {primary: true} do
+    run %Q{#{sudo} -u postgres psql -c "drop user #{postgresql_user};"}
+    run %Q{#{sudo} -u postgres psql -c "drop database #{postgresql_database};"}
+  end
+
+  desc "Create a database for this application."
   task :create_database, roles: :db, only: {primary: true} do
     run %Q{#{sudo} -u postgres psql -c "create user #{postgresql_user} with password '#{postgresql_password}';"}
     run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
