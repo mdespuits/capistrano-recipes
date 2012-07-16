@@ -24,7 +24,7 @@ namespace :unicorn do
 
   desc "Start Unicorn"
   task :start, :except => { :no_release => true } do
-    run "cd #{current_path}; bundle exec unicorn_rails -E production -c config/unicorn.rb -D"
+    run "cd #{current_path}; bundle exec unicorn -E production -c config/unicorn.rb -D"
   end
   after "deploy:start", "unicorn:start"
 
