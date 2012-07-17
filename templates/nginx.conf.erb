@@ -1,5 +1,5 @@
 upstream <%= application %> {
-  server unix:<%= shared_path %>/config/unicorn.<%= application %>.sock fail_timeout=0;
+  server unix:<%= shared_path %>/config/unicorn.sock fail_timeout=0;
 }
 
 server {

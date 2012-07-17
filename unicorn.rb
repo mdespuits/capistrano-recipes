@@ -25,7 +25,7 @@ namespace :unicorn do
 
   desc "Start Unicorn"
   task :start, :except => { :no_release => true } do
-    run "cd #{current_path}; bundle exec unicorn -E production -c config/unicorn.rb -D"
+    run "cd #{current_path}; bundle exec unicorn -E production -c #{current_path}/config/unicorn.rb -D"
   end
   after "deploy:start", "unicorn:start"
 
@@ -37,7 +37,8 @@ namespace :unicorn do
 
   desc "Restart unicorn"
   task :restart, roles: :app do
-    run "kill -s USR2 `cat #{unicorn_pid}`"
+    stop
+    start
   end
   after "deploy:restart", "unicorn:restart"
 
