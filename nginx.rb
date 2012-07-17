@@ -14,6 +14,7 @@ namespace :nginx do
   desc "Setup nginx configuration for this application"
   task :setup, roles: :web do
     template "nginx.conf.erb", "/tmp/nginx_conf"
+    run "#{sudo} cp /tmp/nginx_conf #{shared_path}/config/nginx.conf.copy"
     run "#{sudo} mv /tmp/nginx_conf /etc/nginx/sites-enabled/#{application}"
     run "#{sudo} rm -f /etc/nginx/sites-enabled/default"
     restart
