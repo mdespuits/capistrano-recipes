@@ -37,8 +37,7 @@ namespace :unicorn do
 
   desc "Restart unicorn"
   task :restart, roles: :app do
-    stop
-    start
+    run "kill -s USR2 `cat #{unicorn_pid}`"
   end
   after "deploy:restart", "unicorn:restart"
 
