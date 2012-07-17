@@ -26,7 +26,6 @@ namespace :unicorn do
   desc "Start Unicorn"
   task :start, :except => { :no_release => true } do
     run "cd #{current_path}; bundle exec unicorn -E production -c config/unicorn.rb -D"
-    run "kill -s QUIT `cat #{unicorn_pid}.oldbin`"
   end
   after "deploy:start", "unicorn:start"
 
