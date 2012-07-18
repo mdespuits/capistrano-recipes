@@ -17,7 +17,6 @@ namespace :unicorn do
 
   desc "Symlink unicorn config"
   task :symlink do
-    setup
     run "ln -nfs #{unicorn_config} #{release_path}/config/unicorn.rb"
   end
   after "deploy:finalize_update", "unicorn:symlink"
