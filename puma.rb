@@ -10,10 +10,11 @@ namespace :puma do
   desc "Start Puma"
   task :start, :except => { :no_release => true } do
     commands = ["cd #{current_path};"]
-    commands << ["bundle exec puma"]
-    commands << ["--environment production"]
-    commands << ["--pidfile #{puma_pid}"]
-    commands << ["--threads #{puma_min_threads}:#{puma_max_threads}"]
+    commands << sudo
+    commands << "bundle exec puma"
+    commands << "--environment production"
+    commands << "--pidfile #{puma_pid}"
+    commands << "--threads #{puma_min_threads}:#{puma_max_threads}"
     begin
       commands << "--bind #{puma_bind}"
     rescue; end
@@ -23,13 +24,13 @@ namespace :puma do
 
   desc "Stop Puma"
   task :stop, :except => { :no_release => true } do
-    run "kill -9 `cat #{puma_pid}`"
+    run "#{sudo} kill -9 `cat #{puma_pid}`"
   end
   after "deploy:stop", "puma:stop"
 
   desc "Restart Puma"
   task :restart, roles: :app do
-    run "kill -s SIGUSR2 `cat #{puma_pid}`"
+    run "#{sudo} kill -s SIGUSR2 `cat #{puma_pid}`"
   end
   after "deploy:restart", "puma:restart"
 end
