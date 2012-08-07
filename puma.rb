@@ -23,7 +23,7 @@ namespace :puma do
 
   desc "Stop Puma"
   task :stop, :except => { :no_release => true } do
-    run "kill -s QUIT `cat #{puma_pid}`"
+    run "kill -9 `cat #{puma_pid}`"
   end
   after "deploy:stop", "puma:stop"
 
