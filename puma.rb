@@ -9,7 +9,7 @@ namespace :puma do
   desc "Start Puma"
   task :start, :except => { :no_release => true } do
     commands = ["cd #{current_path};"]
-    commands << ["puma"]
+    commands << ["bundle exec puma"]
     commands << ["--environment production"]
     commands << ["--pidfile #{puma_pid}"]
     commands << ["--threads #{puma_min_threads}:#{puma_max_threads}"]
