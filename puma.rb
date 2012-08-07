@@ -16,7 +16,7 @@ namespace :puma do
     begin
       commands << "--bind #{puma_bind}"
     rescue; end
-    run commands.join " "
+    run commands.join(" "), :pty => false
   end
   after "deploy:start", "puma:start"
 
