@@ -4,6 +4,7 @@ set_default(:puma_max_threads) { 16 }
 set_default(:puma_port) { "80" }
 set_default(:puma_bind) { "tcp://0.0.0.0:#{puma_port}" }
 set_default(:puma_pid) { "#{shared_path}/pids/puma.pid" }
+set_default(:puma_log) { "#{shared_path}/log/puma-production.log" }
 
 namespace :puma do
   desc "Start Puma"
@@ -16,7 +17,7 @@ namespace :puma do
     begin
       commands << "--bind #{puma_bind}"
     rescue; end
-    run commands.join(" "), :pty => false
+    run commands.join(" ") + " >> #{puma_log} 2>&1 &", :pty => false
   end
   after "deploy:start", "puma:start"
 
