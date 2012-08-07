@@ -8,7 +8,7 @@ set_default(:puma_pid) { "#{shared_path}/pids/puma.pid" }
 namespace :puma do
   desc "Start Puma"
   task :start, :except => { :no_release => true } do
-    commands = ["cd #{current_path}"]
+    commands = ["cd #{current_path};"]
     commands << ["puma"]
     commands << ["--environment production"]
     commands << ["--pidfile #{puma_pid}"]
