@@ -17,6 +17,8 @@ worker_processes <%= unicorn_workers %>
 # Timeout at 30 seconds
 timeout <%= unicorn_timeout %>
 
+preload_app true
+
 before_fork do |server, worker|
   # the following is highly recomended for Rails + "preload_app true"
   # as there's no need for the master process to hold a connection
