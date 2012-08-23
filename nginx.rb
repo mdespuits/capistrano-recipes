@@ -20,12 +20,17 @@ namespace :nginx do
     run "#{sudo} rm -f /etc/nginx/sites-enabled/default"
   end
   after "deploy:setup", "nginx:setup"
-  
-  %w[start stop restart].each do |command|
+
+  %w[start stop].each do |command|
     desc "#{command} nginx"
     task command, roles: :web do
       run "#{sudo} service nginx #{command}"
     end
     after "deploy:#{command}", "nginx:#{command}"
+  end
+
+  desc "Restart nginx"
+  task command, roles: :web do
+    run "#{sudo} service nginx restart"
   end
 end
