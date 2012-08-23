@@ -30,7 +30,7 @@ namespace :nginx do
   end
 
   desc "Restart nginx"
-  task command, roles: :web do
+  task :restart, roles: :web do
     run "#{sudo} service nginx restart"
   end
 end
